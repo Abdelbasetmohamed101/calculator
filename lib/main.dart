@@ -1,5 +1,5 @@
 import 'package:calculator/resource/cubit.dart';
-import 'package:calculator/resource/operations.dart';
+import 'package:calculator/resource/states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -10,8 +10,8 @@ void main() {
 class CalculatorApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider( 
-      create: (context) => CounterCubit(),
+    return BlocProvider(
+      create: (context) => CalculatorCubit(InitialState),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         home: CalculatorScreen(),
@@ -28,20 +28,7 @@ class CalculatorScreen extends StatefulWidget {
 class _CalculatorScreenState extends State<CalculatorScreen> {
   String _displayValue = '0';
 
-  void _onButtonPressed(String buttonText) { 
-    setState(() {
-      if (buttonText == 'AC') {
-        _displayValue = '0';
-      } else if (buttonText == '=') {
-      } else {
-        if (_displayValue == '0') {
-          _displayValue = buttonText;
-        } else {
-          _displayValue += buttonText;
-        }
-      }
-    });
-  }
+  void _onButtonPressed(String buttonText) {}
 
   @override
   Widget build(BuildContext context) {
@@ -49,8 +36,15 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
       appBar: AppBar(
         title: const Text('Calculator'),
       ),
-      body: BlocBuilder<CounterCubit, CounterStates>(
+      body: BlocBuilder<CalculatorCubit, OperationStates>(
         builder: (context, state) {
+          if (state is DevideState) {
+          } else if (state is MutiplyState) {
+          } else if (state is SubtractionState) {
+          } else if (state is SubtractionState) {
+          } else {
+            print("there is error");
+          }
           return Column(
             children: [
               Expanded(
@@ -110,7 +104,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
   Widget buildButton(String buttonText) {
     return Expanded(
       child: MaterialButton(
-        onPressed: () => _onButtonPressed(buttonText),
+        onPressed: () {},
         child: Text(
           buttonText,
           style: const TextStyle(fontSize: 24.0),
